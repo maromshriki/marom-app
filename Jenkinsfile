@@ -17,7 +17,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker built .'  // Build the image using docker-compose
+                    sh 'docker build .'  // Build the image using docker-compose
                 }
             }
         }
