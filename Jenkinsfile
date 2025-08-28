@@ -5,7 +5,7 @@ pipeline {
         GIT_CREDENTIALS_ID = 'github-creds'
         GIT_REPO_URL = 'https://github.com/maromshriki/marom-app'
         BRANCH = 'main' 
-        IMAGE_NAME= 'calc:latest'
+        IMAGE_NAME= 'marom/jenkins'
     }
 
     stages {
