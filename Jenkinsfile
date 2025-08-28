@@ -76,11 +76,17 @@ pipeline {
                                                             
 	stage('Health Check') {
             steps {
-                script {   
+                script {
+                        def response = sh(script: "curl -s http://44.202.90.240:5000/health", returnStdout: true).trim()
+                    if (!response.contains("OK")) {
+                        error "Health check failed! Service did not return 'OK'. Response: ${response}"
+                    } else {
+                        echo "Service is healthy. Response contains 'OK'."    
                         sh 'curl http://44.202.90.240:5000'                  
                                                           
-                }
-            }
-        }
-   }
+                  }
+              }
+          }
+     }
+  }
 }
