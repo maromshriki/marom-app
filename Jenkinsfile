@@ -51,7 +51,8 @@ pipeline {
             steps {
                 script {
                     
-                        sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 992382545251.dkr.ecr.us-east-1.amazonaws.com'
+                        sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 992382545251.dkr.ecr.us-east-1.amazonaws.com' 
+                        sh 'docker tag marom/jenkins:latest 992382545251.dkr.ecr.us-east-1.amazonaws.com/marom/jenkins:latest'
                     }
                 }
             }
