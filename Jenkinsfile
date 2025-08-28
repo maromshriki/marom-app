@@ -78,10 +78,10 @@ pipeline {
             steps {
                 script {
                         def response = sh(script: "curl -s http://44.202.90.240:5000/health", returnStdout: true).trim()
-                    if (!response.contains("OK")) {
+                    if (!response.contains('"status":"ok"')) {
                         error "Health check failed! Service did not return 'OK'. Response: ${response}"
                     } else {
-                        echo "Service is healthy. Response contains 'stauts:ok'."    
+                        echo "Service is healthy. Response contains 'status:ok'."    
                         sh 'curl http://44.202.90.240:5000'                  
                                                           
                   }
