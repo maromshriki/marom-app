@@ -64,12 +64,23 @@ pipeline {
                 }
             }
         }
-    }
-
-    post {
-        failure {
-            echo 'Pipeline failed – no push or deployment executed.'
+    
+        stage('Deploy') {
+            steps {
+                script{
+                   sh ''' docker build -t $IMAGE_NAME .
+                    docker run -d -p 5000:5000 $IMAGE_NAME'''
+                }
+            }
         }
-    }
-}
+                                                            
+	stage('Health Check') {
+            steps {
+                script {   
+                        sh 'curl http://44.202.90.240:5000'                  
+                                                          
+                }
+            }
+        }
+ }
 
