@@ -13,7 +13,6 @@ pipeline {
                 git credentialsId: "${GIT_CREDENTIALS_ID}", url: "${GIT_REPO_URL}", branch: "${BRANCH}"
             }
         }
-    }
 
         stage('Install dependencies') {
             steps {
@@ -24,7 +23,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker-compose up -t ."
+                    sh 'docker-compose build'  // Build the image using docker-compose
                 }
             }
         }
@@ -49,22 +48,15 @@ pipeline {
                         else
                             echo "No changes to push."
                         fi'''
-                    }
                 }
-            }               
-
-    post {
-        failure {
-            echo 'Pipeline failed – no push or deployment executed.'
+            }
         }
-    }
-
 
         stage('Login to ECR') {
             steps {
                 script {
                     withAWS(credentials: 'aws') {
-                        sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 992382545251.dkr.ecr.us-east-1.amazonaws.com"
+                        sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
                     }
                 }
             }
@@ -79,5 +71,10 @@ pipeline {
         }
     }
 
-
+    post {
+        failure {
+            echo 'Pipeline failed – no push or deployment executed.'
+        }
+    }
+}
 
