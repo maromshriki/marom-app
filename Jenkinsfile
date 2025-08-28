@@ -5,7 +5,7 @@ pipeline {
         GIT_CREDENTIALS_ID = 'github-creds'
         GIT_REPO_URL = 'https://github.com/maromshriki/marom-app'
         BRANCH = 'main' 
-        IMAGE_NAME= 'caculetor:latest'
+        IMAGE_NAME= 'calc:latest'
     }
 
     stages {
@@ -25,7 +25,7 @@ pipeline {
 
         stage('Run tests') {
             steps {
-                sh 'docker run -t calc -d $IMAGE_NAME sh -c "python3 -m unittest discover -s tests -v"'
+                sh 'docker run  -d $IMAGE_NAME sh -c "python3 -m unittest discover -s tests -v"'
             }
         }
 
