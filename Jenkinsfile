@@ -52,12 +52,12 @@ pipeline {
                 script {
                     
                         sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 992382545251.dkr.ecr.us-east-1.amazonaws.com' 
-                        sh 'docker tag marom/calculator:latest 992382545251.dkr.ecr.us-east-1.amazonaws.com/marom/calculator:latest'
+                        sh 'docker tag marom/calculator:latest 992382545251.dkr.ecr.us-east-1.amazonaws.com/marom/calculator'
                     }
                 }
             }
 
-         stage('Push to ECR latest') {
+         stage('Push to ECR') {
               steps {
                 script {
                     sh '''docker push 992382545251.dkr.ecr.us-east-1.amazonaws.com/marom/calculator'''
@@ -67,7 +67,7 @@ pipeline {
 
         
   
-        stage('Push to ECR') {
+        stage('Push to ECR latest') {
            when {
                  branch 'main'
             }
