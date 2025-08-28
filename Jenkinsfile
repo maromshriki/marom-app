@@ -1,5 +1,5 @@
 pipeline {
-    agent { docker{ ...}}
+    agent any
 
     environment {
         GIT_CREDENTIALS_ID = 'github-creds'
