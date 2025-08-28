@@ -4,7 +4,8 @@ pipeline {
     environment {
         GIT_CREDENTIALS_ID = 'github-creds'
         GIT_REPO_URL = 'https://github.com/maromshriki/marom-app'
-        BRANCH = 'main'
+        BRANCH = 'main' 
+        IMAGE_NAME= 'caculetor:latest'
     }
 
     stages {
@@ -17,14 +18,14 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build .'  // Build the image using docker-compose
+                    sh 'docker build -t $IMAGE_NAME .'  // Build the image using docker-compose
                 }
             }
         }
 
         stage('Run tests') {
             steps {
-                sh 'python3 -m unittest discover -s tests -v'
+                sh 'docker run --calc -d $IMAGE_NAME sh -c "python3 -m unittest discover -s tests -v"'
             }
         }
 
@@ -59,7 +60,7 @@ pipeline {
         stage('Push to ECR') {
             steps {
                 script {
-                    sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:${IMAGE_TAG}"
+                    sh 'docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:${IMAGE_TAG}'
                 }
             }
         }
