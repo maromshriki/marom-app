@@ -56,9 +56,23 @@ pipeline {
                     }
                 }
             }
+
+         stage('Push to ECR latest') {
+              steps {
+                script {
+                    sh '''docker push 992382545251.dkr.ecr.us-east-1.amazonaws.com/marom/calculator'''
+                }
+            }
+        }
+
+        
   
         stage('Push to ECR') {
-            steps {
+           when {
+                 branch 'main'
+            }
+
+              steps {
                 script {
                     sh '''docker push 992382545251.dkr.ecr.us-east-1.amazonaws.com/marom/calculator:latest'''
                 }
@@ -66,6 +80,10 @@ pipeline {
         }
     
         stage('Deploy') {
+          when {
+                 branch 'main'
+            }
+
             steps {
                 script{
                    sh ''' docker build -t $IMAGE_NAME .
@@ -75,7 +93,11 @@ pipeline {
         }
                                                             
 	stage('Health Check') {
-            steps {
+           when {
+                 branch 'main'
+            }
+
+             steps {
                 script {
                         def response = sh(script: "curl -s http://44.202.90.240:5000/health", returnStdout: true).trim()
                         print(response)
