@@ -81,7 +81,7 @@ pipeline {
                     if (!response.contains("OK")) {
                         error "Health check failed! Service did not return 'OK'. Response: ${response}"
                     } else {
-                        echo "Service is healthy. Response contains 'OK'."    
+                        echo "Service is healthy. Response contains 'stauts:ok'."    
                         sh 'curl http://44.202.90.240:5000'                  
                                                           
                   }
