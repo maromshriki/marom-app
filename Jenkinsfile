@@ -57,7 +57,7 @@ pipeline {
                 }
             }
 
-         stage('Push to ECR') {
+         stage('Push to ECR latest') {
               steps {
                 script {
                     sh '''docker push 992382545251.dkr.ecr.us-east-1.amazonaws.com/marom/calculator'''
