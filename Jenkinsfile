@@ -13,6 +13,7 @@ pipeline {
                 git credentialsId: "${GIT_CREDENTIALS_ID}", url: "${GIT_REPO_URL}", branch: "${BRANCH}"
             }
         }
+    }
 
         stage('Install dependencies') {
             steps {
@@ -52,14 +53,14 @@ pipeline {
                 }
             }
         }
-    }
+    
 
     post {
         failure {
             echo 'Pipeline failed – no push or deployment executed.'
         }
     }
-}
+
 
         stage('Login to ECR') {
             steps {
@@ -79,5 +80,6 @@ pipeline {
             }
         }
     }
-}
+
+
 
