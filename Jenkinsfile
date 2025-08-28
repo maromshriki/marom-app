@@ -48,12 +48,10 @@ pipeline {
                             git push https://${GIT_USERNAME}:${GIT_PASSWORD}@${GIT_REPO_URL#https://} HEAD:${BRANCH}
                         else
                             echo "No changes to push."
-                        fi
-                    '''
+                        fi'''
+                    }
                 }
-            }
-        }
-    
+            }               
 
     post {
         failure {
