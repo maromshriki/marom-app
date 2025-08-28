@@ -1,4 +1,3 @@
-
 pipeline {
     agent { docker{ ...}}
 
@@ -20,7 +19,7 @@ pipeline {
                 sh 'pip install -r requirements.txt'
             }
         }
-        
+
         stage('Build Docker Image') {
             steps {
                 script {
@@ -81,6 +80,4 @@ pipeline {
         }
     }
 }
-          
-        
 
