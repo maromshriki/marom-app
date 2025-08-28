@@ -25,7 +25,7 @@ pipeline {
 
         stage('Run tests') {
             steps {
-                sh 'docker run --calc -d $IMAGE_NAME sh -c "python3 -m unittest discover -s tests -v"'
+                sh 'docker run -t calc -d $IMAGE_NAME sh -c "python3 -m unittest discover -s tests -v"'
             }
         }
 
@@ -51,7 +51,7 @@ pipeline {
             steps {
                 script {
                     withAWS(credentials: 'aws') {
-                        sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+                        sh 'aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com'
                     }
                 }
             }
